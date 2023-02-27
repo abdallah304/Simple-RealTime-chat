@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Simple RealTime Chat</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'><link rel="stylesheet" href="./style.css">
+<script src="/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="center">
+
+  <div class="chat" style="background-color: #F7F7F7;">
+    <div class="messages" id="chat" style="box-shadow: none ;">
+      <div class="time">
+        Today at 11:41
+      </div>
+      <div class="" id="msg_container"></div>
+    </div>
+    <div class="input">
+      <form id="send_message_form">
+     <input id="msg_input" placeholder="Type your message here!" type="text" style="width:220px;"/>
+     <button type="submit" ><i
+      class="fas fa-paper-plane"
+      style="color: rgba(52, 52, 235, 0.904); width: 30px" aria-hidden="true"
+    ></i></button>
+    </form>
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script><script  src="./script.js"></script>
+  <script>
+    const socket = window.io();
+    const msgForm = document.querySelector('#send_message_form');
+    const msgInput = document.querySelector('#msg_input');
+    const msgContainer = document.querySelector('#msg_container');
+    
+    msgForm.onsubmit = e => {
+      e.preventDefault();
+      const msg = msgInput.value;
+      socket.emit('send_message', {msg});
+      msgInput.value= '';  
+    }
+
+    socket.on('send_message', ({msg}) => {
+      msgContainer.innerHTML += `<p>${msg}</p>`
+    })
+  </script>
+</body>
+</html>
