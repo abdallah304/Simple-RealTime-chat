@@ -1,1 +1,1 @@
-# Simple-RealTime-chat with NodeJS, HTML and CSS
+# Simple-RealTime-chat with NodeJS, Socket.io, HTML and CSS
